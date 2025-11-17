@@ -162,13 +162,13 @@ export default async function AboutPage() {
               Life at Our School
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {gallery.map((g, idx) => (
+              {gallery.map((g: { image_url: string | null; title: string | null }, idx: number) => (
                 <div
                   key={idx}
                   className="relative aspect-[4/3] rounded-lg overflow-hidden"
                 >
                   <Image
-                    src={g.image_url}
+                    src={g.image_url || ""}
                     alt={g.title || "Gallery"}
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
