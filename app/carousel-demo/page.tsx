@@ -13,7 +13,7 @@ export default function CarouselDemo() {
     {
       src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80",
       alt: "Campus View",
-      title: "Welcome to Our School",
+      title: "Welcome to Goshen Community School",
       description: "Excellence in education since 1968",
     },
     {
@@ -205,14 +205,3 @@ export default function CarouselDemo() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
