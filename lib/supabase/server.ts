@@ -7,16 +7,44 @@ export const createServerClient = async () => {
 
   // Return a mock client during build if env vars are missing
   if (!supabaseUrl || !supabaseAnonKey) {
+    // Create a chainable query builder mock that is also a Promise
+    const createQueryBuilder = (): any => {
+      const promise = Promise.resolve({ data: [], error: null });
+      const builder = Object.assign(promise, {
+        select: () => builder,
+        order: () => builder,
+        eq: () => builder,
+        neq: () => builder,
+        gt: () => builder,
+        gte: () => builder,
+        lt: () => builder,
+        lte: () => builder,
+        like: () => builder,
+        ilike: () => builder,
+        is: () => builder,
+        in: () => builder,
+        contains: () => builder,
+        range: () => builder,
+        limit: () => builder,
+        single: () => Promise.resolve({ data: null, error: null }),
+        maybeSingle: () => Promise.resolve({ data: null, error: null }),
+      });
+      return builder;
+    };
+
     return {
       auth: {
         getSession: async () => ({ data: { session: null }, error: null }),
         getUser: async () => ({ data: { user: null }, error: null }),
+        signInWithPassword: async () => ({ data: null, error: { message: "Supabase not configured" } }),
+        signOut: async () => ({ error: null }),
       },
       from: () => ({
-        select: () => ({ data: [], error: null }),
-        insert: () => ({ data: null, error: null }),
-        update: () => ({ data: null, error: null }),
-        delete: () => ({ data: null, error: null }),
+        select: () => createQueryBuilder(),
+        insert: () => Promise.resolve({ data: null, error: null }),
+        update: () => createQueryBuilder(),
+        delete: () => createQueryBuilder(),
+        upsert: () => Promise.resolve({ data: null, error: null }),
       }),
     } as any;
   }
