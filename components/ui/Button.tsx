@@ -4,7 +4,10 @@ import classNames from "classnames";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { motion } from "framer-motion";
 
-interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration"> {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 
+  "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration" |
+  "onDragStart" | "onDrag" | "onDragEnd"
+> {
   children: ReactNode;
   variant?: "primary" | "secondary" | "accent" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
