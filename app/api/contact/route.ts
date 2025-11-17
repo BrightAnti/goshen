@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +14,9 @@ export async function POST(request: Request) {
       );
     }
 
+    // Email functionality temporarily commented out
+    // TODO: Fix nodemailer import and uncomment when ready
+    /*
     // Create nodemailer transporter
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_SERVER_HOST,
@@ -43,12 +46,14 @@ export async function POST(request: Request) {
 
     // Send email
     await transporter.sendMail(mailOptions);
+    */
 
-    return NextResponse.json({ success: true });
+    // Return success response (email sending disabled)
+    return NextResponse.json({ success: true, message: "Contact form submitted (email disabled)" });
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error processing contact form:", error);
     return NextResponse.json(
-      { error: "Failed to send email" },
+      { error: "Failed to process request" },
       { status: 500 }
     );
   }
