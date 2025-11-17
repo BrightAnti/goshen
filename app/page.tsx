@@ -79,7 +79,8 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-4xl md:text-6xl font-bold mb-4 text-white"
             >
-              Welcome to {process.env.NEXT_PUBLIC_SITE_NAME || "Our School"}
+              Welcome to{" "}
+              {process.env.NEXT_PUBLIC_SITE_NAME || "Goshen Community School"}
             </motion.h1>
             <div className="h-1 w-24 bg-white/70 rounded mb-6" />
             <motion.p
@@ -95,14 +96,14 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="flex flex-row gap-4 flex-wrap"
+              className="flex flex-row gap-2 sm:gap-4"
             >
-              <Link href="/admissions">
+              <Link href="/admissions" className="flex-shrink-0">
                 <Button size="lg" variant="primary">
                   Apply Now
                 </Button>
               </Link>
-              <Link href="/about/about-gcs">
+              <Link href="/about/about-gcs" className="flex-shrink-0">
                 <Button size="lg" variant="secondary">
                   Learn More
                 </Button>
