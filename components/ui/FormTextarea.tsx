@@ -6,14 +6,36 @@ interface FormTextareaProps
   label?: string;
   error?: string;
   helperText?: string;
+  compact?: boolean;
+  fillHeight?: boolean;
 }
 
 const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
-  ({ label, error, helperText, className, ...props }, ref) => {
+  (
+    {
+      label,
+      error,
+      helperText,
+      compact = false,
+      fillHeight = false,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
-      <div className="w-full">
+      <div
+        className={classNames("w-full", {
+          "flex flex-col flex-1 min-h-0": fillHeight,
+        })}
+      >
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            className={classNames(
+              "block font-medium text-gray-700",
+              compact ? "text-xs mb-1" : "text-sm mb-2"
+            )}
+          >
             {label}
             {props.required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -21,10 +43,12 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
         <textarea
           ref={ref}
           className={classNames(
-            "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-vertical",
+            "w-full border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none",
+            compact ? "px-3 py-1.5 text-sm" : "px-4 py-2",
             {
               "border-red-500 focus:ring-red-500 focus:border-red-500": error,
               "border-gray-300": !error,
+              "flex-1 min-h-[5rem]": fillHeight,
             },
             className
           )}
@@ -42,6 +66,8 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
 FormTextarea.displayName = "FormTextarea";
 
 export default FormTextarea;
+
+
 
 
 

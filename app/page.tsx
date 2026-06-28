@@ -15,6 +15,55 @@ import Carousel from "@/components/ui/Carousel";
 import { supabase } from "@/lib/supabase/client";
 import SectionHeader from "@/components/ui/SectionHeader";
 
+const pastStudentTestimonials = [
+  {
+    quote:
+      "I am happy to use the knowledge Goshen has given me to help in my success in the future",
+    name: "Joshua Amoah",
+    role: "Class of 2025",
+    image: "/images/students/stu1.jpeg",
+  },
+  {
+    quote:
+      "On my first day it was welcoming and nice and I met a lot of fun and kind people. The teachers were kind. I love Goshen very much and I will never forget how much Goshen has impacted me.",
+    name: "Emmanuella Puli",
+    role: "Class of 2025",
+    image: "/images/students/stu2.jpeg",
+  },
+  {
+    quote:
+      "One of my best memories was playing football with my seniors, with the whole school watching. The energy, the pressure, the moment it's something I'll never forget.",
+    name: "Amir Fattal",
+    role: "Class of 2026",
+    image: "/images/students/stu3.jpeg",
+  },
+];
+
+function StudentPhoto({ name, image }: { name: string; image: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  if (imageError) {
+    return (
+      <div className="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-xl flex-shrink-0">
+        {name.split(" ")[0][0]}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-primary/20 shadow-md">
+      <Image
+        src={image}
+        alt={name}
+        fill
+        sizes="80px"
+        className="object-cover"
+        onError={() => setImageError(true)}
+      />
+    </div>
+  );
+}
+
 const staticGalleryImages = [
   { src: "/images/ship.jpg", alt: "Campus 1" },
   { src: "/images/friendsladies.jpg", alt: "Campus 2" },
@@ -77,11 +126,19 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-4xl md:text-6xl font-bold mb-4 text-white"
+              className="text-4xl md:text-6xl font-bold mb-3 text-white"
             >
               Welcome to{" "}
               {process.env.NEXT_PUBLIC_SITE_NAME || "Goshen Community School"}
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              className="text-base md:text-xl font-semibold tracking-wide text-[#FFD600] mb-4"
+            >
+              CAMBRIDGE & GES Hybrid Curriculum
+            </motion.p>
             <div className="h-1 w-24 bg-white/70 rounded mb-6" />
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -126,8 +183,8 @@ export default function Home() {
                     idx % 6 === 0 || idx % 6 === 1
                       ? "md:col-span-3 aspect-[16/9]"
                       : idx % 6 === 2 || idx % 6 === 3
-                      ? "md:col-span-2 aspect-square"
-                      : "md:col-span-2 aspect-[4/3]"
+                        ? "md:col-span-2 aspect-square"
+                        : "md:col-span-2 aspect-[4/3]"
                   }`}
                 >
                   <Image
@@ -144,39 +201,32 @@ export default function Home() {
         </section>
       )}
 
-      {/* Statistics Section */}
-      <section className="py-16 bg-white border-b border-gray-200">
+      <section className="py-10 bg-primary/5 border-y border-gray-200 relative overflow-hidden">
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-primary/5 to-transparent z-10"></div>
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-primary/5 to-transparent z-10"></div>
+
         <div className="container-custom">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="flex gap-16 whitespace-nowrap animate-marquee">
             {[
-              { value: "1990", label: "Established" },
-              { value: "350+", label: "Students" },
-              { value: "40+", label: "Teachers" },
-              { value: "100%", label: "BECE Pass Rate" },
-            ].map((stat, index) => (
-              <StaggerItem key={index}>
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    delay: index * 0.1,
-                  }}
-                >
-                  <div className="text-5xl md:text-6xl font-bold text-primary mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
-                </motion.div>
-              </StaggerItem>
+              "You belong",
+              "You learn",
+              "You grow",
+              "You shine",
+              "Goshen — The fruitful vine",
+            ].map((text, idx) => (
+              <span
+                key={idx}
+                className="text-xl md:text-2xl font-semibold text-primary tracking-wide"
+              >
+                {text}
+              </span>
             ))}
-          </StaggerContainer>
+          </div>
         </div>
       </section>
+
       {/* Static Campus Gallery */}
-      <section className="py-16 bg-white">
+      <section className="py-12 bg-white">
         <div className="container-custom">
           <SectionHeader title="Campus Highlights" />
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -198,41 +248,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <AnimatedSection animation="fadeIn">
-        <section className="py-16 bg-white">
+        <section className="py-12 bg-white">
           <div className="container-custom">
-            <SectionHeader title="What Parents Say" />
+            <SectionHeader title="What Past Students Say" />
             <StaggerContainer className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  quote:
-                    "GCS nurtures both the heart and mind. Our child is thriving.",
-                  name: "Ama K.",
-                  role: "Parent, Junior High School",
-                },
-                {
-                  quote:
-                    "The teachers are exceptional and the community is welcoming.",
-                  name: "Kwesi M.",
-                  role: "Parent, Infant School",
-                },
-                {
-                  quote: "A balanced focus on academics, arts, and leadership.",
-                  name: "Naana A.",
-                  role: "Parent, Primary School",
-                },
-              ].map((t, i) => (
+              {pastStudentTestimonials.map((t, i) => (
                 <StaggerItem key={i}>
-                  <Card hover>
+                  <Card hover className="h-full">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        {t.name.split(" ")[0][0]}
-                      </div>
-                      <div>
-                        <p className="text-gray-700">“{t.quote}”</p>
+                      <StudentPhoto name={t.name} image={t.image} />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-gray-700 leading-relaxed">
+                          &ldquo;{t.quote}&rdquo;
+                        </p>
                         <div className="mt-3 text-sm text-gray-500 font-medium">
-                          {t.name} • {t.role}
+                          {t.name} &bull; {t.role}
                         </div>
                       </div>
                     </div>
@@ -247,26 +278,26 @@ export default function Home() {
       {/* Why Choose Us */}
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
-          <SectionHeader title="Why Choose Us" />
+          <SectionHeader title="Why Choose Us ?" />
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {[
               {
                 icon: <MdSchool size={32} />,
-                title: "Quality Education",
+                title: "Holistic Education",
                 description:
-                  "Comprehensive curriculum designed to nurture academic excellence.",
+                  "Delivering a balanced, high-quality education that prepares students for lifelong success.",
               },
               {
                 icon: <MdPeople size={32} />,
-                title: "Expert Faculty",
+                title: "Character Development",
                 description:
-                  "Dedicated teachers committed to student success and growth.",
+                  "Nurturing confident, responsible, and compassionate individuals with strong values.",
               },
               {
                 icon: <MdStar size={32} />,
-                title: "Holistic Development",
+                title: "Critical Thinking & Problem Solving",
                 description:
-                  "Focus on academics, sports, arts, and character building.",
+                  "Empowering students to think independently, solve problems, and embrace challenges with confidence.",
               },
             ].map((feature, idx) => (
               <StaggerItem key={idx}>
@@ -293,7 +324,7 @@ export default function Home() {
 
       {/* Belonging & Diversity */}
       <AnimatedSection animation="fadeIn">
-        <section className="py-16 bg-gray-50 text-gray-800 relative">
+        <section className="py-10 bg-gray-50 text-gray-800 relative">
           <div className="container-custom relative">
             <div className="max-w-4xl mx-auto text-center">
               <AnimatedSection animation="fadeInUp">
@@ -301,11 +332,11 @@ export default function Home() {
               </AnimatedSection>
 
               <AnimatedSection animation="fadeInUp" delay={0.2}>
-                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                  At our school, every child is seen, valued, and supported. We
-                  provide a strong academic foundation, a caring environment,
-                  and opportunities that help students grow in confidence,
-                  character, and curiosity.
+                <p className="text-lg md:text-xl text-gray-600 leading-relaxed mt-4">
+                  A Christ-centred learning community committed to nurturing
+                  academic excellence, strong character, and lifelong learners.
+                  We equip every child with the confidence, values, and skills
+                  to thrive and make a positive impact in the world.
                 </p>
               </AnimatedSection>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
@@ -10,6 +10,7 @@ import FormTextarea from "@/components/ui/FormTextarea";
 import ImageUpload from "@/components/ui/ImageUpload";
 import Button from "@/components/ui/Button";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 interface EventFormData {
   title: string;
@@ -27,16 +28,38 @@ export default function EventForm({ event }: { event?: any }) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Convert date to datetime-local format (YYYY-MM-DDTHH:mm)
+  const formatDateForInput = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<EventFormData>({
-    defaultValues: event || {
-      published: false,
-    },
+    defaultValues: event
+      ? {
+          ...event,
+          date: formatDateForInput(event.date),
+          end_date: event.end_date ? formatDateForInput(event.end_date) : "",
+        }
+      : {
+          published: false,
+        },
   });
+
+  const startDate = watch("date");
+  const endDate = watch("end_date");
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -82,7 +105,7 @@ export default function EventForm({ event }: { event?: any }) {
           ? "Event updated successfully! 🎉"
           : "Event created successfully! 🎉"
       );
-      router.push("/admin/events");
+      router.push("/admin/news");
       router.refresh();
     } catch (err: any) {
       console.error("Error saving event:", err);
@@ -95,89 +118,107 @@ export default function EventForm({ event }: { event?: any }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <FormInput
-        label="Title"
-        {...register("title", { required: "Title is required" })}
-        error={errors.title?.message}
-        onChange={(e) => {
-          register("title").onChange(e);
-          handleTitleChange(e);
-        }}
-        required
-      />
-
-      <FormInput
-        label="Slug (URL)"
-        {...register("slug", { required: "Slug is required" })}
-        error={errors.slug?.message}
-        helperText="Auto-generated from title, but you can customize it"
-        required
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormInput
-          label="Start Date & Time"
-          type="datetime-local"
-          {...register("date", { required: "Date is required" })}
-          error={errors.date?.message}
+          label="Title"
+          {...register("title", { required: "Title is required" })}
+          error={errors.title?.message}
+          onChange={(e) => {
+            register("title").onChange(e);
+            handleTitleChange(e);
+          }}
           required
         />
 
         <FormInput
-          label="End Date & Time"
-          type="datetime-local"
-          {...register("end_date")}
-          error={errors.end_date?.message}
+          label="Slug"
+          {...register("slug", { required: "Slug is required" })}
+          error={errors.slug?.message}
+          required
         />
       </div>
 
-      <FormInput
-        label="Location"
-        {...register("location")}
-        error={errors.location?.message}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <FormInput
+            label="Start Date & Time"
+            type="datetime-local"
+            {...register("date", { required: "Date is required" })}
+            error={errors.date?.message}
+            required
+          />
+          {startDate && (
+            <p className="mt-1 text-xs text-gray-500">
+              {format(new Date(startDate), "dd-MMM-yyyy h:mm a")}
+            </p>
+          )}
+        </div>
 
-      <FormTextarea
-        label="Description"
-        rows={8}
-        {...register("description", { required: "Description is required" })}
-        error={errors.description?.message}
-        required
-      />
+        <div>
+          <FormInput
+            label="End Date & Time (optional)"
+            type="datetime-local"
+            {...register("end_date")}
+            error={errors.end_date?.message}
+          />
+          {endDate && (
+            <p className="mt-1 text-xs text-gray-500">
+              {format(new Date(endDate), "dd-MMM-yyyy h:mm a")}
+            </p>
+          )}
+        </div>
+      </div>
 
-      <ImageUpload
-        label="Event Image"
-        onImageSelect={setImageFile}
-        currentImage={event?.image}
-      />
-
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="published"
-          {...register("published")}
-          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Location (optional)"
+          {...register("location")}
+          error={errors.location?.message}
         />
-        <label
-          htmlFor="published"
-          className="ml-2 text-sm font-medium text-gray-700"
-        >
-          Publish immediately
-        </label>
+
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="published"
+            {...register("published")}
+            className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+          />
+          <label
+            htmlFor="published"
+            className="ml-2 text-sm font-medium text-gray-700"
+          >
+            Publish immediately
+          </label>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormTextarea
+          label="Description"
+          rows={5}
+          {...register("description", { required: "Description is required" })}
+          error={errors.description?.message}
+          required
+        />
+
+        <ImageUpload
+          label="Event Image"
+          onImageSelect={setImageFile}
+          currentImage={event?.image}
+        />
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-800 text-sm">{error}</p>
         </div>
       )}
 
-      <div className="flex gap-4">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           variant="primary"
-          size="lg"
           isLoading={isSubmitting}
         >
           {event ? "Update" : "Create"} Event
@@ -185,7 +226,6 @@ export default function EventForm({ event }: { event?: any }) {
         <Button
           type="button"
           variant="ghost"
-          size="lg"
           onClick={() => router.back()}
         >
           Cancel

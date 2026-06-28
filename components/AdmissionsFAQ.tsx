@@ -35,13 +35,16 @@ function FAQItem({ question, answer, colors }: FAQItemProps) {
 
   return (
     <div
-      className="rounded-xl border border-gray-200 bg-white shadow-sm cursor-pointer transition-all duration-300 hover:shadow-md p-6"
+      className="rounded-xl border border-gray-200 bg-white shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg p-6"
       onClick={() => setOpen(!open)}
+      style={{
+        borderColor: open ? `${colors.primaryGreen}40` : undefined,
+      }}
     >
       <div className="flex justify-between items-center">
         <h3
           style={{ color: colors.primaryGreen }}
-          className="font-semibold text-lg md:text-xl pr-4"
+          className="font-bold text-lg md:text-xl pr-4"
         >
           {question}
         </h3>
@@ -87,14 +90,17 @@ export default function AdmissionsFAQ({ faqs, colors }: AdmissionsFAQProps) {
   }
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-10 bg-white">
       <div className="container-custom max-w-6xl mx-auto">
-        <h2
-          className="text-2xl md:text-3xl font-bold mb-6 text-center"
-          style={{ color: colors.primaryGreen }}
-        >
-          Frequently Asked Questions
-        </h2>
+        <div className="text-center mb-8">
+          <h2
+            className="text-2xl md:text-3xl font-extrabold mb-3 tracking-tight"
+            style={{ color: colors.primaryGreen }}
+          >
+            Frequently Asked Questions
+          </h2>
+          <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: colors.primaryYellow }}></div>
+        </div>
         <div className="space-y-4">
           {validFaqs.map((faq, index) => (
             <FAQItem

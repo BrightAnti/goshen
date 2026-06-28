@@ -43,25 +43,23 @@ export default function ImageUpload({
       </label>
 
       {preview ? (
-        <div className="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden">
+        <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
           <Image src={preview} alt="Preview" fill sizes="100vw" className="object-cover" />
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+            className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full hover:bg-red-600 transition-colors"
           >
-            <MdClose size={20} />
+            <MdClose size={18} />
           </button>
         </div>
       ) : (
-        <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <MdCloudUpload size={48} className="text-gray-400 mb-3" />
-            <p className="mb-2 text-sm text-gray-500">
-              <span className="font-semibold">Click to upload</span> or drag and
-              drop
+        <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+          <div className="flex flex-col items-center justify-center">
+            <MdCloudUpload size={32} className="text-gray-400 mb-2" />
+            <p className="text-xs text-gray-500">
+              <span className="font-semibold">Click to upload</span>
             </p>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
           </div>
           <input
             type="file"

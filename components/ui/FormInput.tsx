@@ -5,14 +5,20 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
+  compact?: boolean;
 }
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ label, error, helperText, className, ...props }, ref) => {
+  ({ label, error, helperText, compact = false, className, ...props }, ref) => {
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            className={classNames(
+              "block font-medium text-gray-700",
+              compact ? "text-xs mb-1" : "text-sm mb-2"
+            )}
+          >
             {label}
             {props.required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -20,7 +26,8 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         <input
           ref={ref}
           className={classNames(
-            "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors",
+            "w-full border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors",
+            compact ? "px-3 py-1.5 text-sm" : "px-4 py-2",
             {
               "border-red-500 focus:ring-red-500 focus:border-red-500": error,
               "border-gray-300": !error,
@@ -41,6 +48,10 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 FormInput.displayName = "FormInput";
 
 export default FormInput;
+
+
+
+
 
 
 

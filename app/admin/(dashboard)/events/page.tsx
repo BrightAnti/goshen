@@ -61,7 +61,7 @@ export default async function AdminEventsPage() {
                   >
                     <td className="py-3 px-4">{event.title}</td>
                     <td className="py-3 px-4">
-                      {format(new Date(event.date), "MMM dd, yyyy")}
+                      {format(new Date(event.date), "dd-MMM-yyyy")}
                     </td>
                     <td className="py-3 px-4">
                       <span

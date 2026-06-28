@@ -49,6 +49,7 @@ export default function Navbar() {
       submenu: [
         { name: "Message from the Director", href: "/about/director-message" },
         { name: "About GCS", href: "/about/about-gcs" },
+        { name: "Services", href: "/about/services" },
         // { name: "History", href: "/about/history" },
       ],
     },

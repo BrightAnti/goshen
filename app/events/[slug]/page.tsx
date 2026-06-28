@@ -15,9 +15,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getEvent(slug: string) {
@@ -35,7 +35,8 @@ async function getEvent(slug: string) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const event = await getEvent(params.slug);
+  const { slug } = await params;
+  const event = await getEvent(slug);
 
   if (!event) {
     return {
@@ -55,7 +56,8 @@ export async function generateMetadata({
 }
 
 export default async function EventDetailPage({ params }: PageProps) {
-  const event = await getEvent(params.slug);
+  const { slug } = await params;
+  const event = await getEvent(slug);
 
   if (!event) {
     notFound();
@@ -125,7 +127,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                           Date
                         </p>
                         <p className="font-semibold">
-                          {format(new Date(event.date), "MMMM dd, yyyy")}
+                          {format(new Date(event.date), "dd-MMM-yyyy")}
                         </p>
                       </div>
                     </div>

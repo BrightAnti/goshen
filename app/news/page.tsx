@@ -1,4 +1,8 @@
 import PageHero from "@/components/ui/PageHero";
+import AnimatedSection from "@/components/animations/AnimatedSection";
+import StaggerContainer, {
+  StaggerItem,
+} from "@/components/animations/StaggerContainer";
 
 import { createServerClient } from "@/lib/supabase/server";
 import { News } from "@/lib/types/database";
@@ -37,15 +41,18 @@ export default async function NewsPage() {
       <section className="py-16">
         <div className="container-custom">
           {news.length === 0 ? (
-            <Card>
-              <p className="text-center text-gray-500 py-8">
-                No news articles available at the moment. Check back soon!
-              </p>
-            </Card>
+            <AnimatedSection animation="fadeIn">
+              <Card>
+                <p className="text-center text-gray-500 py-8">
+                  No news articles available at the moment. Check back soon!
+                </p>
+              </Card>
+            </AnimatedSection>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {news.map((item) => (
-                <Link key={item.id} href={`/news/${item.slug}`}>
+                <StaggerItem key={item.id}>
+                <Link href={`/news/${item.slug}`}>
                   <Card hover padding="none" className="h-full">
                     {item.image && (
                       <div className="relative h-48 w-full">
@@ -60,7 +67,7 @@ export default async function NewsPage() {
                     )}
                     <div className="p-6">
                       <p className="text-sm text-gray-500 mb-2">
-                        {format(new Date(item.created_at), "MMMM dd, yyyy")}
+                        {format(new Date(item.created_at), "dd-MMM-yyyy")}
                       </p>
                       <h2 className="text-xl font-bold mb-3 line-clamp-2">
                         {item.title}
@@ -73,8 +80,9 @@ export default async function NewsPage() {
                     </div>
                   </Card>
                 </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           )}
         </div>
       </section>

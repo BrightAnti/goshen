@@ -11,7 +11,7 @@ export default function NewsActions({ newsId }: { newsId: string }) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this article?")) return;
+    if (!confirm("Are you sure you want to delete this news article?")) return;
 
     const deletePromise = async () => {
       const { error } = await supabase.from("news").delete().eq("id", newsId);
@@ -21,9 +21,9 @@ export default function NewsActions({ newsId }: { newsId: string }) {
     };
 
     toast.promise(deletePromise(), {
-      pending: "Deleting article...",
-      success: "Article deleted successfully! 🎉",
-      error: "Failed to delete article. Please try again.",
+      pending: "Deleting news article...",
+      success: "News article deleted successfully! 🎉",
+      error: "Failed to delete news article. Please try again.",
     });
   };
 

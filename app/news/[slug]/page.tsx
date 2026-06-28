@@ -10,9 +10,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getNews(slug: string) {
@@ -30,7 +30,8 @@ async function getNews(slug: string) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const news = await getNews(params.slug);
+  const { slug } = await params;
+  const news = await getNews(slug);
 
   if (!news) {
     return {
@@ -50,7 +51,8 @@ export async function generateMetadata({
 }
 
 export default async function NewsDetailPage({ params }: PageProps) {
-  const news = await getNews(params.slug);
+  const { slug } = await params;
+  const news = await getNews(slug);
 
   if (!news) {
     notFound();
@@ -70,7 +72,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
             </Button>
           </Link>
           <p className="text-primary-100 mb-2">
-            {format(new Date(news.created_at), "MMMM dd, yyyy")}
+            {format(new Date(news.created_at), "dd-MMM-yyyy")}
           </p>
           <h1 className="text-4xl md:text-5xl font-bold">{news.title}</h1>
         </div>

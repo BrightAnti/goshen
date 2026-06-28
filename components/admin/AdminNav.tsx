@@ -33,11 +33,7 @@ export default function AdminNav() {
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: MdDashboard },
-    { name: "News", href: "/admin/news", icon: MdArticle },
-    { name: "Events", href: "/admin/events", icon: MdEvent },
-    { name: "Gallery", href: "/admin/gallery", icon: MdPhotoLibrary },
-    { name: "Staff", href: "/admin/staff", icon: MdPeople },
-    { name: "Settings", href: "/admin/settings", icon: MdSettings },
+    { name: "News & Events", href: "/admin/news", icon: MdArticle },
   ];
 
   return (
@@ -59,7 +55,9 @@ export default function AdminNav() {
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
+              pathname === item.href || 
+              pathname.startsWith(`${item.href}/`) ||
+              (item.href === "/admin/news" && (pathname.startsWith("/admin/news") || pathname.startsWith("/admin/events")));
 
             return (
               <motion.li

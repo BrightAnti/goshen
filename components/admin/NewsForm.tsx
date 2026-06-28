@@ -81,8 +81,8 @@ export default function NewsForm({ news }: { news?: any }) {
 
       toast.success(
         news
-          ? "Article updated successfully! 🎉"
-          : "Article created successfully! 🎉"
+          ? "News article updated successfully! 🎉"
+          : "News article published successfully! 🎉"
       );
       router.push("/admin/news");
       router.refresh();
@@ -97,74 +97,77 @@ export default function NewsForm({ news }: { news?: any }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <FormInput
-        label="Title"
-        {...register("title", { required: "Title is required" })}
-        error={errors.title?.message}
-        onChange={(e) => {
-          register("title").onChange(e);
-          handleTitleChange(e);
-        }}
-        required
-      />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Title"
+          {...register("title", { required: "Title is required" })}
+          error={errors.title?.message}
+          onChange={(e) => {
+            register("title").onChange(e);
+            handleTitleChange(e);
+          }}
+          required
+        />
 
-      <FormInput
-        label="Slug (URL)"
-        {...register("slug", { required: "Slug is required" })}
-        error={errors.slug?.message}
-        helperText="Auto-generated from title, but you can customize it"
-        required
-      />
-
-      <FormTextarea
-        label="Excerpt"
-        rows={3}
-        {...register("excerpt")}
-        error={errors.excerpt?.message}
-        helperText="Short summary for preview cards"
-      />
+        <FormInput
+          label="Slug"
+          {...register("slug", { required: "Slug is required" })}
+          error={errors.slug?.message}
+          required
+        />
+      </div>
 
       <FormTextarea
         label="Content"
-        rows={10}
+        rows={6}
         {...register("content", { required: "Content is required" })}
         error={errors.content?.message}
         required
       />
 
-      <ImageUpload
-        label="Featured Image"
-        onImageSelect={setImageFile}
-        currentImage={news?.image}
-      />
-
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="published"
-          {...register("published")}
-          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ImageUpload
+          label="Featured Image"
+          onImageSelect={setImageFile}
+          currentImage={news?.image}
         />
-        <label
-          htmlFor="published"
-          className="ml-2 text-sm font-medium text-gray-700"
-        >
-          Publish immediately
-        </label>
+
+        <div className="space-y-4">
+          <FormTextarea
+            label="Excerpt (optional)"
+            rows={3}
+            {...register("excerpt")}
+            error={errors.excerpt?.message}
+          />
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="published"
+              {...register("published")}
+              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+            />
+            <label
+              htmlFor="published"
+              className="ml-2 text-sm font-medium text-gray-700"
+            >
+              Publish immediately
+            </label>
+          </div>
+        </div>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-800 text-sm">{error}</p>
         </div>
       )}
 
-      <div className="flex gap-4">
+      <div className="flex gap-3 pt-2">
         <Button
           type="submit"
           variant="primary"
-          size="lg"
           isLoading={isSubmitting}
         >
           {news ? "Update" : "Create"} Article
@@ -172,7 +175,6 @@ export default function NewsForm({ news }: { news?: any }) {
         <Button
           type="button"
           variant="ghost"
-          size="lg"
           onClick={() => router.back()}
         >
           Cancel

@@ -7,17 +7,16 @@ import { MdArrowBack } from "react-icons/md";
 export default function NewEventPage() {
   return (
     <div>
-      <div className="mb-8">
-        <Link href="/admin/events">
-          <Button variant="ghost" className="mb-4">
-            <MdArrowBack className="mr-2" /> Back to Events
+      <div className="mb-4">
+        <Link href="/admin/news">
+          <Button variant="ghost" size="sm" className="mb-3">
+            <MdArrowBack className="mr-2" /> Back
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900">Create Event</h1>
-        <p className="text-gray-600 mt-2">Add a new event to your calendar</p>
+        <h1 className="text-2xl font-bold text-gray-900">Create Event</h1>
       </div>
 
-      <Card>
+      <Card padding="sm">
         <EventForm />
       </Card>
     </div>

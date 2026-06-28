@@ -7,6 +7,10 @@ import { format } from "date-fns";
 import { Metadata } from "next";
 import { MdLocationOn } from "react-icons/md";
 import PageHero from "@/components/ui/PageHero";
+import AnimatedSection from "@/components/animations/AnimatedSection";
+import StaggerContainer, {
+  StaggerItem,
+} from "@/components/animations/StaggerContainer";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -50,18 +54,23 @@ export default async function EventsPage() {
       {/* Upcoming Events */}
       <section className="py-16">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold mb-8">Upcoming Events</h2>
+          <AnimatedSection animation="fadeInUp">
+            <h2 className="text-3xl font-bold mb-8">Upcoming Events</h2>
+          </AnimatedSection>
 
           {upcomingEvents.length === 0 ? (
-            <Card>
-              <p className="text-center text-gray-500 py-8">
-                No upcoming events scheduled at the moment. Check back soon!
-              </p>
-            </Card>
+            <AnimatedSection animation="fadeIn">
+              <Card>
+                <p className="text-center text-gray-500 py-8">
+                  No upcoming events scheduled at the moment. Check back soon!
+                </p>
+              </Card>
+            </AnimatedSection>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {upcomingEvents.map((event) => (
-                <Link key={event.id} href={`/events/${event.slug}`}>
+                <StaggerItem key={event.id}>
+                <Link href={`/events/${event.slug}`}>
                   <Card hover padding="none" className="h-full">
                     {event.image && (
                       <div className="relative h-48 w-full">
@@ -107,8 +116,9 @@ export default async function EventsPage() {
                     </div>
                   </Card>
                 </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           )}
         </div>
       </section>
@@ -117,10 +127,13 @@ export default async function EventsPage() {
       {pastEvents.length > 0 && (
         <section className="py-16 bg-gray-50">
           <div className="container-custom">
-            <h2 className="text-3xl font-bold mb-8">Past Events</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatedSection animation="fadeInUp">
+              <h2 className="text-3xl font-bold mb-8">Past Events</h2>
+            </AnimatedSection>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {pastEvents.map((event) => (
-                <Link key={event.id} href={`/events/${event.slug}`}>
+                <StaggerItem key={event.id}>
+                <Link href={`/events/${event.slug}`}>
                   <Card hover padding="none" className="h-full opacity-90">
                     {event.image && (
                       <div className="relative h-48 w-full">
@@ -135,7 +148,7 @@ export default async function EventsPage() {
                     )}
                     <div className="p-6">
                       <p className="text-sm text-gray-500 mb-2">
-                        {format(new Date(event.date), "MMMM dd, yyyy")}
+                        {format(new Date(event.date), "dd-MMM-yyyy")}
                       </p>
                       <h3 className="text-xl font-bold mb-2 line-clamp-2">
                         {event.title}
@@ -143,8 +156,9 @@ export default async function EventsPage() {
                     </div>
                   </Card>
                 </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
       )}

@@ -1,7 +1,19 @@
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: path.join(__dirname),
   images: {
-    domains: ["ayzuwmakumxreexedlfc.supabase.co", "images.unsplash.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ayzuwmakumxreexedlfc.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
     unoptimized: process.env.EXPORT_MODE === "true",
   },
   // For static export to cPanel

@@ -21,12 +21,14 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       <AdminNav />
-      <main className="flex-1 p-8">{children}</main>
+      <main className="flex-1 p-6 overflow-y-auto">{children}</main>
     </div>
   );
 }
+
+
 
 
 

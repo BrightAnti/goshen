@@ -44,9 +44,7 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Refresh session
-  await supabase.auth.getSession();
-
+  // Only check auth for admin routes - getUser() is sufficient and more efficient
   const {
     data: { user },
   } = await supabase.auth.getUser();
