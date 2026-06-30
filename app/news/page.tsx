@@ -52,34 +52,34 @@ export default async function NewsPage() {
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {news.map((item) => (
                 <StaggerItem key={item.id}>
-                <Link href={`/news/${item.slug}`}>
-                  <Card hover padding="none" className="h-full">
-                    {item.image && (
-                      <div className="relative h-48 w-full">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover rounded-t-lg"
-                        />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <p className="text-sm text-gray-500 mb-2">
-                        {format(new Date(item.created_at), "dd-MMM-yyyy")}
-                      </p>
-                      <h2 className="text-xl font-bold mb-3 line-clamp-2">
-                        {item.title}
-                      </h2>
-                      {item.excerpt && (
-                        <p className="text-gray-600 line-clamp-3">
-                          {item.excerpt}
-                        </p>
+                  <Link href={`/news/${item.slug}`}>
+                    <Card hover padding="none" className="h-full">
+                      {item.image && (
+                        <div className="relative h-48 w-full">
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover rounded-t-lg"
+                          />
+                        </div>
                       )}
-                    </div>
-                  </Card>
-                </Link>
+                      <div className="p-6">
+                        <p className="text-sm text-gray-500 mb-2">
+                          {format(new Date(item.created_at), "dd-MMM-yyyy")}
+                        </p>
+                        <h2 className="text-xl font-bold mb-3 line-clamp-2">
+                          {item.title}
+                        </h2>
+                        {item.excerpt && (
+                          <p className="text-gray-600 line-clamp-3">
+                            {item.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    </Card>
+                  </Link>
                 </StaggerItem>
               ))}
             </StaggerContainer>

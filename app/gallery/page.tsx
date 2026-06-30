@@ -68,7 +68,7 @@ export default async function GalleryPage() {
           ) : (
             categories.map((category) => {
               const categoryItems = galleryItems.filter(
-                (item) => (item.category || "Uncategorized") === category
+                (item) => (item.category || "Uncategorized") === category,
               );
 
               if (categoryItems.length === 0) return null;

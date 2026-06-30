@@ -88,7 +88,7 @@ export default async function ContactPage() {
       <section
         className="relative overflow-hidden border-b border-gray-200"
         style={{
-          backgroundImage: "url('/images/yellow.jpg')",
+          backgroundImage: "url('/images/happydelight.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

@@ -148,44 +148,44 @@ export default async function AdmissionsPage() {
               className="shadow-xl border-2 rounded-xl bg-white"
               style={{ borderColor: colors.primaryGreen + "20" }}
             >
-            <div className="flex flex-col md:flex-row items-center gap-6 p-6">
-              <div className="flex-shrink-0">
-                <div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg"
-                  style={{ backgroundColor: colors.primaryYellow }}
-                >
-                  <MdDescription
-                    size={40}
+              <div className="flex flex-col md:flex-row items-center gap-6 p-6">
+                <div className="flex-shrink-0">
+                  <div
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{ backgroundColor: colors.primaryYellow }}
+                  >
+                    <MdDescription
+                      size={40}
+                      style={{ color: colors.primaryGreen }}
+                    />
+                  </div>
+                </div>
+                <div className="flex-grow text-center md:text-left">
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-2 tracking-tight"
                     style={{ color: colors.primaryGreen }}
-                  />
+                  >
+                    Download Admission Form
+                  </h3>
+                  <p className="text-gray-700 text-lg mb-4">
+                    Get started by downloading our admission application form.
+                    Complete it and submit it along with the required documents.
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <a
+                    href="/documents/admission-form.pdf"
+                    download
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-lg font-bold text-white transition-all duration-300 hover:shadow-xl hover:scale-105 transform"
+                    style={{
+                      backgroundColor: colors.primaryGreen,
+                    }}
+                  >
+                    <MdDownload size={24} />
+                    <span>Download PDF</span>
+                  </a>
                 </div>
               </div>
-              <div className="flex-grow text-center md:text-left">
-                <h3
-                  className="text-2xl md:text-3xl font-bold mb-2 tracking-tight"
-                  style={{ color: colors.primaryGreen }}
-                >
-                  Download Admission Form
-                </h3>
-                <p className="text-gray-700 text-lg mb-4">
-                  Get started by downloading our admission application form.
-                  Complete it and submit it along with the required documents.
-                </p>
-              </div>
-              <div className="flex-shrink-0">
-                <a
-                  href="/documents/admission-form.pdf"
-                  download
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-lg font-bold text-white transition-all duration-300 hover:shadow-xl hover:scale-105 transform"
-                  style={{
-                    backgroundColor: colors.primaryGreen,
-                  }}
-                >
-                  <MdDownload size={24} />
-                  <span>Download PDF</span>
-                </a>
-              </div>
-            </div>
             </div>
           </AnimatedSection>
         </div>
@@ -216,27 +216,27 @@ export default async function AdmissionsPage() {
                   padding="lg"
                   className="text-center h-full shadow-md hover:shadow-xl transition-shadow duration-300"
                 >
-                <div className="flex flex-col items-center h-full">
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl mb-5 shadow-lg"
-                    style={{
-                      backgroundColor: colors.primaryYellow,
-                      color: colors.primaryGreen,
-                    }}
-                  >
-                    {item.step}
+                  <div className="flex flex-col items-center h-full">
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl mb-5 shadow-lg"
+                      style={{
+                        backgroundColor: colors.primaryYellow,
+                        color: colors.primaryGreen,
+                      }}
+                    >
+                      {item.step}
+                    </div>
+                    <h3
+                      className="text-xl font-bold mb-3"
+                      style={{ color: colors.primaryGreen }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3
-                    className="text-xl font-bold mb-3"
-                    style={{ color: colors.primaryGreen }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </Card>
+                </Card>
               </StaggerItem>
             ))}
           </StaggerContainer>

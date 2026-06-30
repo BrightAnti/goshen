@@ -67,13 +67,3 @@ export default function PageHero({
     </section>
   );
 }
-
-
-
-
-
-
-
-
-
-

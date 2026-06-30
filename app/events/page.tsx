@@ -70,52 +70,52 @@ export default async function EventsPage() {
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {upcomingEvents.map((event) => (
                 <StaggerItem key={event.id}>
-                <Link href={`/events/${event.slug}`}>
-                  <Card hover padding="none" className="h-full">
-                    {event.image && (
-                      <div className="relative h-48 w-full">
-                        <Image
-                          src={event.image}
-                          alt={event.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover rounded-t-lg"
-                        />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="bg-accent text-gray-900 rounded-lg p-3 text-center min-w-[60px]">
-                          <div className="text-2xl font-bold">
-                            {format(new Date(event.date), "dd")}
-                          </div>
-                          <div className="text-sm">
-                            {format(new Date(event.date), "MMM")}
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold mb-2 line-clamp-2">
-                            {event.title}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {format(new Date(event.date), "h:mm a")}
-                          </p>
-                        </div>
-                      </div>
-
-                      {event.location && (
-                        <div className="flex items-center text-sm text-gray-600 mb-3">
-                          <MdLocationOn className="mr-1 flex-shrink-0" />
-                          {event.location}
+                  <Link href={`/events/${event.slug}`}>
+                    <Card hover padding="none" className="h-full">
+                      {event.image && (
+                        <div className="relative h-48 w-full">
+                          <Image
+                            src={event.image}
+                            alt={event.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover rounded-t-lg"
+                          />
                         </div>
                       )}
+                      <div className="p-6">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="bg-accent text-gray-900 rounded-lg p-3 text-center min-w-[60px]">
+                            <div className="text-2xl font-bold">
+                              {format(new Date(event.date), "dd")}
+                            </div>
+                            <div className="text-sm">
+                              {format(new Date(event.date), "MMM")}
+                            </div>
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                              {event.title}
+                            </h3>
+                            <p className="text-sm text-gray-500">
+                              {format(new Date(event.date), "h:mm a")}
+                            </p>
+                          </div>
+                        </div>
 
-                      <p className="text-gray-600 text-sm line-clamp-3">
-                        {event.description}
-                      </p>
-                    </div>
-                  </Card>
-                </Link>
+                        {event.location && (
+                          <div className="flex items-center text-sm text-gray-600 mb-3">
+                            <MdLocationOn className="mr-1 flex-shrink-0" />
+                            {event.location}
+                          </div>
+                        )}
+
+                        <p className="text-gray-600 text-sm line-clamp-3">
+                          {event.description}
+                        </p>
+                      </div>
+                    </Card>
+                  </Link>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -133,29 +133,29 @@ export default async function EventsPage() {
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {pastEvents.map((event) => (
                 <StaggerItem key={event.id}>
-                <Link href={`/events/${event.slug}`}>
-                  <Card hover padding="none" className="h-full opacity-90">
-                    {event.image && (
-                      <div className="relative h-48 w-full">
-                        <Image
-                          src={event.image}
-                          alt={event.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover rounded-t-lg"
-                        />
+                  <Link href={`/events/${event.slug}`}>
+                    <Card hover padding="none" className="h-full opacity-90">
+                      {event.image && (
+                        <div className="relative h-48 w-full">
+                          <Image
+                            src={event.image}
+                            alt={event.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover rounded-t-lg"
+                          />
+                        </div>
+                      )}
+                      <div className="p-6">
+                        <p className="text-sm text-gray-500 mb-2">
+                          {format(new Date(event.date), "dd-MMM-yyyy")}
+                        </p>
+                        <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                          {event.title}
+                        </h3>
                       </div>
-                    )}
-                    <div className="p-6">
-                      <p className="text-sm text-gray-500 mb-2">
-                        {format(new Date(event.date), "dd-MMM-yyyy")}
-                      </p>
-                      <h3 className="text-xl font-bold mb-2 line-clamp-2">
-                        {event.title}
-                      </h3>
-                    </div>
-                  </Card>
-                </Link>
+                    </Card>
+                  </Link>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -165,3 +165,4 @@ export default async function EventsPage() {
     </div>
   );
 }
+//
